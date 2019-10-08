@@ -18,7 +18,7 @@ PhonebookPresenterTest >> setUp [
 
 	presenter := PhonebookPresenter on: phonebook.
 	
-	presenter application: SpecApplication new.
+	presenter application: SpApplication new.
 	window := presenter openWithSpec
 
 ]

@@ -1,6 +1,6 @@
 Class {
 	#name : #PhonebookEntryPresenter,
-	#superclass : #ComposablePresenterWithModel,
+	#superclass : #SpPresenterWithModel,
 	#instVars : [
 		'nameLabelLabel',
 		'companyLabelLabel',
@@ -17,7 +17,7 @@ Class {
 { #category : #specs }
 PhonebookEntryPresenter class >> defaultSpec [ 
 
-	^ SpecGridLayout new
+	^ SpGridLayout new
 		add: #nameLabelLabel at: 1@1;	
 		add: #nameLabel at: 2@1;
 		add: #companyLabelLabel at: 1@2;	
@@ -69,7 +69,7 @@ PhonebookEntryPresenter >> nameLabel [
 ]
 
 { #category : #initialization }
-PhonebookEntryPresenter >> setLabel: aLabelPresenter field: aSymbol. [
+PhonebookEntryPresenter >> setLabel: aLabelPresenter field: aSymbol [.
 
 	self model ifNil: [  
 		aLabelPresenter label: ''.

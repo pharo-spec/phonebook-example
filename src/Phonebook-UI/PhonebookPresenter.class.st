@@ -1,6 +1,6 @@
 Class {
 	#name : #PhonebookPresenter,
-	#superclass : #ComposablePresenterWithModel,
+	#superclass : #SpPresenterWithModel,
 	#instVars : [
 		'entriesList',
 		'addButton',
@@ -12,11 +12,11 @@ Class {
 
 { #category : #specs }
 PhonebookPresenter class >> defaultSpec [
-	^ SpecBoxLayout newHorizontal
+	^ SpBoxLayout newHorizontal
 		add:
-			(SpecBoxLayout newVertical
+			(SpBoxLayout newVertical
 				add: #entriesList;
-				add: (SpecBoxLayout newHorizontal
+				add: (SpBoxLayout newHorizontal
 							add: #addButton;
 							add: #removeButton;
 							yourself) 
@@ -33,6 +33,17 @@ PhonebookPresenter >> addButton [
 	^ addButton
 ]
 
+{ #category : #initialization }
+PhonebookPresenter >> connectPresenters [
+	removeButton enabled: false.
+	entriesList
+		items: self model entries asOrderedCollection;
+		display: [ :entry | entry name asString , ' (' , entry telephone asString , ')' ];
+		whenSelectionChangedDo: [ :sel | 
+			detailsPanel model: sel selectedItem.
+			removeButton enabled: sel isEmpty not ]
+]
+
 { #category : #accessing }
 PhonebookPresenter >> detailsPanel [
 	^ detailsPanel
@@ -44,22 +55,7 @@ PhonebookPresenter >> entriesList [
 ]
 
 { #category : #initialization }
-PhonebookPresenter >> initializePresenter [
-
-	removeButton enabled: false.
-	
-	entriesList 
-		items: self model entries asOrderedCollection;
-		displayBlock: [ :entry | entry name asString, ' (' , entry telephone asString, ')' ];
-		whenSelectionChangedDo: [ :sel | 
-			detailsPanel model: sel selectedItem.
-			removeButton enabled: sel isEmpty not ].
-	
-	
-]
-
-{ #category : #initialization }
-PhonebookPresenter >> initializeWidgets [
+PhonebookPresenter >> initializePresenters [
 	
 	entriesList := self newList.
 
@@ -75,12 +71,19 @@ PhonebookPresenter >> initializeWidgets [
 	detailsPanel := self instantiate: PhonebookEntryPresenter on: nil.
 ]
 
+{ #category : #initialization }
+PhonebookPresenter >> initializeWindow: aWindowPresenter [
+	super initializeWindow: aWindowPresenter.
+	aWindowPresenter
+		title: self title
+]
+
 { #category : #accessing }
 PhonebookPresenter >> removeButton [
 	^ removeButton
 ]
 
-{ #category : #initialization }
+{ #category : #adding }
 PhonebookPresenter >> removeEntry [
 	self entriesList selection selectedItem ifNil: [ ^ self ].
 	self model removeEntry: self entriesList selection selectedItem.
