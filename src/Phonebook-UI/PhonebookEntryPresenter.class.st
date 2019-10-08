@@ -31,14 +31,14 @@ PhonebookEntryPresenter class >> defaultSpec [
 ]
 
 { #category : #initialization }
-PhonebookEntryPresenter >> initializePresenter [
+PhonebookEntryPresenter >> connectPresenters [
 	
 	self modelChanged
 
 ]
 
 { #category : #initialization }
-PhonebookEntryPresenter >> initializeWidgets [
+PhonebookEntryPresenter >> initializePresenters [
 	
 	nameLabelLabel := self newLabel label: 'Name:'; yourself.
 	companyLabelLabel := self newLabel label: 'Company:'; yourself.

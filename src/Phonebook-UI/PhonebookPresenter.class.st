@@ -1,3 +1,10 @@
+"
+| phonebook presenter |
+phonebook := Phonebook new.
+phonebook addEntry: (PhonebookEntry name: 'A Person' telephone: '11223344' ).
+presenter := PhonebookPresenter on: phonebook.
+presenter openWithSpec
+"
 Class {
 	#name : #PhonebookPresenter,
 	#superclass : #SpPresenterWithModel,
